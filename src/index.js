@@ -1,9 +1,16 @@
-module.exports = function check(str, config) {
-  let sample = config.reduce((a, b) => a + b).split("").filter(e => e !== ',');
-  let original = str.split("");
-  let mutual = [];
-  for (let i = 0; i < sample.length; i++) {
-    original.map((e) => e == sample[i] && mutual.push(true))
+module.exports = function check(str, bracketsConfig) {
+  let configArray = bracketsConfig.map((i) => i[0] + i[1]);
+  let newStr = str;
+  while (true) {
+    for (let i = 0; i < configArray.length; i++) {
+      str = str.replace(configArray[i], '');
+    }
+    if (str.length == 0) {
+      return true;
+    }
+    if (newStr === str) { 
+      return false;
+    }
+    newStr = str;
   }
-  return (mutual.length >= sample.length) ? true : false
-}
+};
